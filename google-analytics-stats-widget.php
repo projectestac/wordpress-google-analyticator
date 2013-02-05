@@ -70,7 +70,16 @@ class GoogleStatsWidget extends WP_Widget
 	
 	function form($instance) {
 		//Defaults
+    // XTEC ************ MODIFICAT - Added Localization support
+    // 2015.12.31 @sarjona
+		$instance = wp_parse_args( (array) $instance, array('title'=>'', 'account'=>'', 'timeFrame'=>'1', 'pageBg'=>'fff', 'widgetBg'=>'999', 'innerBg'=>'fff', 'font'=>'333', 'line1'=>__('Unique', 'google-analyticator'), 'line2'=>__('Visitors', 'google-analyticator')) );
+	//************ ORIGINAL
+    /*
 		$instance = wp_parse_args( (array) $instance, array('title'=>'', 'account'=>'', 'timeFrame'=>'1', 'pageBg'=>'fff', 'widgetBg'=>'999', 'innerBg'=>'fff', 'font'=>'333', 'line1'=>'Unique', 'line2'=>'Visitors') );
+    */
+    //************ FI
+
+
 		
 		$title = htmlspecialchars($instance['title']);
 		$acnt = htmlspecialchars($instance['account']);
