@@ -56,7 +56,14 @@ class GoogleAnalyticsSummary
     function addDashboardWidget()
     {
         # Check if the user is an admin
+//XTEC ************ MODIFICAT - To let superadmin see GA dashboard
+//2015.06.06 @jcaballero
+        if (ga_current_user_is(get_option(key_ga_dashboard_role)) || is_super_admin(get_current_user_id()) ) {
+//************ ORIGINAL
+/*
         if (ga_current_user_is(get_option(key_ga_dashboard_role))) {
+*/
+//************ FI
             wp_add_dashboard_widget('google-analytics-summary', __('Google Analytics Summary', 'google-analyticator'), array(
                 $this,
                 'widget'
@@ -125,7 +132,15 @@ class GoogleAnalyticsSummary
     			
     			jQuery(document).ready(function($){
     				// Add a link to see full stats on the Analytics website
-    				jQuery('#google-analytics-summary h3.hndle span').append('<span class="postbox-title-action"><a href="http://google.com/analytics/" class="edit-box open-box"><?php _e('View Full Stat Report', 'google-analyticator');?></a></span>');
+    // XTEC ************ MODIFICAT - Fixed slashes bug when loading Google Analytics summary in the Dashboard
+    // 2016.01.08 @sarjona
+                    summaryText = "<?php __('View Full Stat Report', 'google-analyticator');?>".replace(/'/g, "\\'");
+                    jQuery('#google-analytics-summary h3.hndle span').append('<span class="postbox-title-action"><a href="http://google.com/analytics/" class="edit-box open-box">'+summaryText+'</a></span>');
+    //************ ORIGINAL
+    /*
+                  jQuery('#google-analytics-summary h3.hndle span').append('<span class="postbox-title-action"><a href="http://google.com/analytics/" class="edit-box open-box"><?php _e('View Full Stat Report', 'google-analyticator');?></a></span>');
+    */
+    //************ FI
     				
     					// Onload call analytics
     					getAnalytics();

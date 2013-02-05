@@ -3,15 +3,15 @@ msgstr ""
 "Project-Id-Version: Google Analyticator v6.4.7.3\n"
 "Report-Msgid-Bugs-To: santi.1410@hotmail.com\n"
 "POT-Creation-Date: 2014-04-23 19:54+0800\n"
-"PO-Revision-Date: 2014-04-23 19:54+0800\n"
-"Last-Translator: Santiago Castro <santi.1410@hotmail.com>\n"
+"PO-Revision-Date: 2015-12-31 12:40+0100\n"
+"Last-Translator: Sara Arjona Téllez <sarjona@xtec.cat>\n"
 "Language-Team: Santiago Castro <santi.1410@hotmail.com>\n"
 "Language: es_ES\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Poedit 1.6.4\n"
+"X-Generator: Poedit 1.5.4\n"
 "X-Poedit-SourceCharset: utf-8\n"
 "X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;"
 "_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2\n"
@@ -659,3 +659,72 @@ msgstr "No hay datos para ver."
 #: ../google-analytics-summary-widget.php:541
 msgid "Views"
 msgstr "Vistas"
+
+# XTEC ************ AFEGIT - New strings for localization support
+# 2015.12.30 @sarjona
+msgid "Google Authentication Code"
+msgstr "Código de autenticación de Google"
+
+msgid ""
+"You need to sign in to Google and grant this plugin access to your Google "
+"Analytics account"
+msgstr ""
+"Es necesario iniciar sesión en Google y otorgar permiso a esta extensión "
+"para acceder a la cuenta de Google Analytics"
+
+msgid "Click Here"
+msgstr "Haga clic aquí"
+
+msgid "Or"
+msgstr "O"
+
+msgid "here"
+msgstr "aquí"
+
+msgid "if you have popups blocked"
+msgstr "si tiene las ventanas emergentes bloqueadas"
+
+msgid ""
+"Enter your Google Authentication Code in this box. This code will be used to "
+"get an Authentication Token so you can access your website stats."
+msgstr ""
+"Debe introducir su código de autenticación de Google en esta casilla. Este "
+"código se utilitza pera obtener un testimonio de autenticación para poder "
+"acceder a les estadísticas de su sitio web."
+
+msgid "Save &amp; Continue"
+msgstr "Guarda y continua"
+
+msgid "I Don't Want To Authenticate Through Google"
+msgstr "No deseo autenticarme a través de Google"
+
+msgid ""
+"If you don't want to authenticate through Google and only use the tracking "
+"capability of the plugin"
+msgstr ""
+"Si no desea autenticarse a través de Google y únicamente utilizar la "
+"capacidad de seguimiento del conector"
+
+msgid "not the dashboard functionality"
+msgstr "sin la funcionalidad del Escritorio"
+
+msgid "you can do this by clicking the button below."
+msgstr "lo puede hacer haciendo clic en el botón de abajo."
+
+msgid ""
+"You will be asked on the next page to manually enter your Google Analytics "
+"UID."
+msgstr ""
+"Se le pedirá, en la página siguiente, que introduzca manualmente el UID de "
+"Google Analytics."
+
+msgid "Continue Without Authentication"
+msgstr "Continua sin autenticación"
+
+# First line. In Spanish is better interchange Unique and Visitors texts
+msgid "Unique"
+msgstr "Visitantes"
+
+# Second line. In Spanish is better interchange Unique and Visitors texts
+msgid "Visitors"
+msgstr "Únicos"

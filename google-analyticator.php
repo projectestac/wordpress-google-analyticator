@@ -166,10 +166,20 @@ add_action('init', 'ga_outgoing_links');
 function add_ga_option_page() {
 
 
+    // XTEC ************ MODIFICAT - Add Google Analyticator into Params admin tab
+    // 2015.12.15 @nacho
+	if(ga_get_active_addons() == false){
+		$plugin_page = add_options_page(__('Google Analyticator Settings', 'google-analyticator'), 'Google Analytics', 'manage_options', basename(__FILE__), 'ga_settings_page');
+		add_action('load-'.$plugin_page, 'ga_pre_load' );
+	}
+	//************ ORIGINAL
+    /*
 	if(ga_get_active_addons() == false){
 		//$plugin_page = add_options_page(__('Google Analyticator Settings', 'google-analyticator'), 'Google Analytics', 'manage_options', basename(__FILE__), 'ga_settings_page');
 		//add_action('load-'.$plugin_page, 'ga_pre_load' );
 	}
+    */
+    //************ FI
 
 	$activate_page = add_submenu_page( null, 'Activation', 'Google Analytics', 'manage_options', 'ga_activate' , 'ga_activate');
 	$reset_page = add_submenu_page(null, 'Reset', 'Reset', 'activate_plugins', 'ga_reset', 'ga_reset' );
@@ -241,8 +251,42 @@ $url = http_build_query( array(
 
     ?>
 
+<!--XTEC ************ MODIFICAT - Localization support
+2013.07.17 @mcagigas-->
+
 <div class="wrap">
   <div class="notice" style="padding: 11px 15px; border-width:1px;"><a style="text-decoration:none;" href="https://appsumo.com/collections/appsumo-originals?utm_source=originals&utm_medium=wp_plugin&utm_campaign=google-analyticator" target="_blank"><b>Turn your WordPress site into a marketing machine 🚀</b></a></div>
+  <p><strong><?php _e('Google Authentication Code', 'google-analyticator') ?> </strong> </p>
+  <p><?php _e('You need to sign in to Google and grant this plugin access to your Google Analytics account', 'google-analyticator') ?></p>
+  <p> <a
+                onclick="window.open('https://accounts.google.com/o/oauth2/auth?<?php echo $url ?>', 'activate','width=700, height=600, menubar=0, status=0, location=0, toolbar=0')"
+                target="_blank"
+                href="javascript:void(0);"> <?php _e('Click Here', 'google-analyticator');?> </a> - <small> <?php _e('Or', 'google-analyticator');?> <a target="_blank" href="https://accounts.google.com/o/oauth2/auth?<?php echo $url ?>"><?php _e('here', 'google-analyticator');?></a> <?php _e('if you have popups blocked', 'google-analyticator');?></small> </p>
+  <div  id="key">
+    <p><?php _e('Enter your Google Authentication Code in this box. This code will be used to get an Authentication Token so you can access your website stats.','google-analyticator') ?></p>
+    <form method="post" action="<?php echo ga_analyticator_setting_url();?>">
+      <?php wp_nonce_field('google-analyticator-update_settings'); ?>
+      <input type="text" name="key_ga_google_token" value="" style="width:450px;"/>
+      <input type="submit"  value="<?php _e('Save &amp; Continue', 'google-analyticator'); ?>" />
+    </form>
+  </div>
+  <br />
+  <br />
+  <br />
+  <hr />
+  <br />
+  <p><strong><?php _e("I Don't Want To Authenticate Through Google", 'google-analyticator') ?> </strong> </p>
+  <p><?php _e("If you don't want to authenticate through Google and only use the tracking capability of the plugin", 'google-analyticator') ?> (<strong><u><?php _e('not the dashboard functionality', 'google-analyticator')?></u></strong>), <?php _e('you can do this by clicking the button below.', 'google-analyticator') ?> </p>
+  <p><?php _e('You will be asked on the next page to manually enter your Google Analytics UID.', 'google-analyticator')?></p>
+  <form method="post" action="<?php echo ga_analyticator_setting_url();?>">
+    <input type="hidden" name="key_ga_google_token" value="" />
+    <?php wp_nonce_field('google-analyticator-update_settings'); ?>
+    <input type="submit"  value="<?php _e('Continue Without Authentication','google-analyticator');?>" />
+  </form>
+</div>
+
+<?php /************ ORIGINAL
+<div class="wrap">
   <p><strong>Google Authentication Code </strong> </p>
   <p>You need to sign in to Google and grant this plugin access to your Google Analytics account</p>
   <p> <a
@@ -271,6 +315,7 @@ $url = http_build_query( array(
     <input type="submit"  value="Continue Without Authentication" />
   </form>
 </div>
+***** FI */ ?>
 <?php
 }
 
@@ -498,6 +543,27 @@ function ga_options_page() {
                 #ga_analyticator_global_notification a.button:active {vertical-align:baseline;}
     	    </style>
 
+<!--// XTEC ************ MODIFICAT - Modify the visiblity if the user is not a xtec_super_admin -->
+<!--// 2015.12.31 @sarjona -->
+<?php if (is_xtec_super_admin()) : ?>
+	    <div id="ga_analyticator_global_notification" class="updated" style="border:3px solid #317A96;position:relative;background:##3c9cc2;background-color:#3c9cc2;color:#ffffff;height:70px;">
+	        <a class="notice-dismiss" href="<?php echo admin_url('admin.php?page=google-analyticator&ga_analyticator_global_notification=0'); ?>" style="right:10px;top:0;"></a>
+	        <p style="font-size:16px;line-height:50px;">
+	                <?php _e('Grow your site faster!'); ?> &nbsp;<a style="background-color: #6267BE;border-color: #3C3F76;" href="<?php echo admin_url('plugin-install.php?tab=plugin-information&plugin=sumome&TB_iframe=true&width=743&height=500'); ?>" class="thickbox button button-primary">Get SumoMe WordPress Plugin</a>
+	        </p>
+	    </div>
+<?php endif; ?>
+<!--//************ ORIGINAL
+<!--/*
+	    <div id="ga_analyticator_global_notification" class="updated" style="border:3px solid #317A96;position:relative;background:##3c9cc2;background-color:#3c9cc2;color:#ffffff;height:70px;">
+	        <a class="notice-dismiss" href="<?php echo admin_url('admin.php?page=google-analyticator&ga_analyticator_global_notification=0'); ?>" style="right:10px;top:0;"></a>
+	        <p style="font-size:16px;line-height:50px;">
+	                <?php _e('Grow your site faster!'); ?> &nbsp;<a style="background-color: #6267BE;border-color: #3C3F76;" href="<?php echo admin_url('plugin-install.php?tab=plugin-information&plugin=sumome&TB_iframe=true&width=743&height=500'); ?>" class="thickbox button button-primary">Get SumoMe WordPress Plugin</a>
+	        </p>
+	    </div>
+*/ -->
+<!--//************ FI -->
+
     	<?php endif ?>
       <form method="post" action="<?php echo esc_url(ga_analyticator_setting_url());?>">
         <?php
@@ -517,6 +583,40 @@ function ga_options_page() {
         <?php } ?>
         <div id="vumga-container" style="position:relative;">
 
+<!--// XTEC ************ MODIFICAT - Modify the visiblity if the user is not a xtec_super_admin -->
+<!--// 2015.12.31 @sarjona -->
+<?php if (is_xtec_super_admin()) : ?>
+    <?php
+$addons = get_option("gapro_addons");
+if(!$addons){?>
+    <div id="vumga-sidebar" style="position: absolute; top: 40px; right: 0; width: 250px; border: 1px solid #ccc; padding: 20px; background:#FFFFFF"> 
+		<h3 style="text-align:center">Support us</h3>
+		<p>1- Check out our <a target="_blank" href="https://wordpress.org/plugins/sumome">SumoMe plugin</a></p>
+		<p>2- <a target="_blank" href="https://wordpress.org/support/view/plugin-reviews/google-analyticator">Leave a :) Review</a></p>	
+		<p>3- Have a great day!</p>
+		<h3 style="text-align:center">Show off your analytics</h3>
+		<p>Use short code <b>[analytics]</b> anywhere on your site to show your analytics publicly.</p>
+		<p>Use short code <b>[analytics-counter]</b> anywhere on your site to display the page view counter widget.</p>
+	</div>
+    <?php }?>
+<?php endif; ?>
+<!--//************ ORIGINAL
+<!--/*
+    <?php
+$addons = get_option("gapro_addons");
+if(!$addons){?>
+    <div id="vumga-sidebar" style="position: absolute; top: 40px; right: 0; width: 250px; border: 1px solid #ccc; padding: 20px; background:#FFFFFF"> 
+		<h3 style="text-align:center">Support us</h3>
+		<p>1- Check out our <a target="_blank" href="https://wordpress.org/plugins/sumome">SumoMe plugin</a></p>
+		<p>2- <a target="_blank" href="https://wordpress.org/support/view/plugin-reviews/google-analyticator">Leave a :) Review</a></p>	
+		<p>3- Have a great day!</p>
+		<h3 style="text-align:center">Show off your analytics</h3>
+		<p>Use short code <b>[analytics]</b> anywhere on your site to show your analytics publicly.</p>
+		<p>Use short code <b>[analytics-counter]</b> anywhere on your site to display the page view counter widget.</p>
+	</div>
+    <?php }?>
+*/ -->
+<!--//************ FI -->
         <div class="google-analyticator-left-column">
         <table class="form-table" cellspacing="2" cellpadding="5" width="100%">
           <tr>
@@ -1336,7 +1436,14 @@ function ga_current_user_is($roles)
 }
 
 function ga_analyticator_setting_url(){
+    // XTEC ************ MODIFICAT - Modified URL to load the correct google-analyticator options
+    // 2015.12.15 @nacho
+    return ( ga_get_active_addons() == false) ? admin_url("options-general.php?page=google-analyticator.php") : admin_url("admin.php?page=ga-pro-experiment.php");
+	//************ ORIGINAL
+    /*
 	return ( ga_get_active_addons() == false) ? admin_url("admin.php?page=google-analyticator") : admin_url("admin.php?page=ga-pro-experiment.php");
+    */
+    //************ FI
 }
 
 function ga_get_active_addons(){
@@ -1473,4 +1580,9 @@ function google_analyticator_filter_plugin_actions($links, $file) {
    return $links;
 }
 
+// XTEC ************ ELIMINAT - Hide Google Analyticator tab from admin-menu
+// 2015.12.15 @nacho
+/*
 add_action( 'admin_menu', 'ga_analyticator_top_level_menu' );
+*/
+//************ FI
