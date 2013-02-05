@@ -701,6 +701,20 @@ if(!$addons){?>
 
                         endif;
                         ?><br />
+                        <input type="checkbox" name="<?php echo key_ga_disable_gasites?>" id="<?php echo key_ga_disable_gasites?>"<?php if(get_option(key_ga_disable_gasites) == ga_enabled){?> checked="checked"<?php }?> /> <?php _e('Hide Google Analytics UID after saving', 'google-analyticator'); ?>
+         	<?php }else{
+			?><?php echo get_option( 'ga_domain_name' ); ?> - To change this, you must <a href="<?php echo admin_url('/options-general.php?page=ga_reset'); ?>">deauthorize and reset the plugin</a>
+			 <input type="hidden" name="<?php echo key_ga_disable_gasites?>" value="<?php echo ga_enabled?>" /><input type="hidden" name="<?php echo key_ga_uid?>" value="<?php echo get_option(key_ga_uid)?>" />
+			<?php
+			}?>               
+         </td>
+      </tr>
+      <tr>
+        <th valign="top" style="padding-top: 10px;"> <label for="<?php echo key_ga_analytic_snippet ?>">
+            <?php _e('Tracking Code', 'google-analyticator'); ?>:</label>
+        </th>
+        <td><?php
+						echo "<select name='".key_ga_analytic_snippet."' id='".key_ga_analytic_snippet."'>\n";
 
                         <?php
                         // XTEC ************ AFEGIT - 
@@ -1445,6 +1459,11 @@ function ga_outgoing_links()
  **/
 function ga_external_tracking_js()
 {
+	// Exit if this is a post preview
+	if (is_preview()) {
+		return;
+	}
+
 	$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 	wp_enqueue_script('ga-external-tracking', plugins_url("/google-analyticator/external-tracking{$suffix}.js"), array('jquery'), GOOGLE_ANALYTICATOR_VERSION);
 }
@@ -1456,8 +1475,7 @@ function ga_current_user_is($roles)
 {
 	if ( !$roles ) return false;
 
-	global $current_user;
-	get_currentuserinfo();
+	$current_user = wp_get_current_user();
 	$user_id = intval( $current_user->ID );
 
 	if ( !$user_id ) {
@@ -1620,5 +1638,3 @@ function google_analyticator_filter_plugin_actions($links, $file) {
 // 2015.12.15 @nacho
 /*
 add_action( 'admin_menu', 'ga_analyticator_top_level_menu' );
-*/
-//************ FI
