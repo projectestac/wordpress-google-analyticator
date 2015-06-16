@@ -56,7 +56,14 @@ class GoogleAnalyticsSummary
     function addDashboardWidget()
     {
         # Check if the user is an admin
+//XTEC ************ MODIFICAT - To let superadmin see GA dashboard
+//2015.06.06 @jcaballero
+        if (ga_current_user_is(get_option(key_ga_dashboard_role)) || is_super_admin(get_current_user_id()) ) {
+//************ ORIGINAL
+/*
         if (ga_current_user_is(get_option(key_ga_dashboard_role))) {
+*/
+//************ FI
             wp_add_dashboard_widget('google-analytics-summary', __('Google Analytics Summary', 'google-analyticator'), array(
                 $this,
                 'widget'
