@@ -1,9 +1,9 @@
 === Google Analyticator ===
-Contributors: VideoUserManuals
-Tags: stats, statistics, google, analytics, dashboard, google analytics, tracking, widget, marketing,pageviews,visits
+Contributors: noahkagan
+Tags: google analytics plugin, stats, statistics, google, analytics, dashboard, google analytics, tracking, widget, marketing,pageviews,visits, web stats, javascript
 Requires at least: 3.2
-Tested up to: 4.2
-Stable tag: 6.4.8
+Tested up to: 4.2.2
+Stable tag: 6.4.9.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -12,6 +12,11 @@ Easily view your Google Analytics and real-time statistics inside WordPress! Mak
 == Description ==
 
 Google Analyticator makes it super easy to view Google Analytics within your WordPress dashboard. This eliminates the need to edit your template code to begin logging. Google Analyticator also includes several widgets for displaying Analytics data in the admin and on your blog.
+
+One of the most popular WordPress plugins for Google Analytics! Over 3.5+ million downloads.
+
+Check out our other plugin for getting more traffic [here](http://bit.ly/1PhVdpI).
+
 
 = Features =
 
@@ -22,6 +27,7 @@ Google Analyticator Has the Following Features:
 - Includes a widget that can be used to display visitor stat information on the front-end
 - Supports outbound link tracking of all links on the page, including links not managed by WordPress
 - Supports download link tracking
+- Shortcodes to show off your Google Analytics stats publicly
 - Supports event tracking with outbound links / downloads instead of the old pageview tracking method
 - Support site speed tracking
 - Allows hiding of Administrator visits without affecting Google Analytics' site overlay feature
@@ -32,7 +38,6 @@ Google Analyticator Has the Following Features:
 - Ability to hide Google UID dropdown
 - Translations - Polish, Turkish, Dutch and Spanish
 
-Check out our other plugin for getting more traffic [here](http://bit.ly/1PhVdpI).
 
 A big thank you from the whole community to [Ronald](http://ronaldheft.com/) for all the hard work he put into this plugin.
 
@@ -43,7 +48,13 @@ Turkish - Cansın Çağan Acarer from http://www.35pixel.com/
 
 == Installation ==
 
-If you are updating, you will need to Authenticate your site again, so it will work with the new Google API
+1. Install the plugin and activate it.
+2. Click to connect to Google Analytics and login.
+3. Copy and paste your Google Authentication code and hit Save and Continue.
+4. Choose the Analytics Account you want in the drop down.
+5. Enable Google Analytics logging. 
+6. Scroll to the bottom and save.
+7. Then go to your Dashboard to see your stats.
 
 == Frequently Asked Questions ==
 
@@ -62,6 +73,26 @@ For any support issues, please use the official WordPress support forums.
 
 
 == Changelog ==
+= 6.4.9.6 =
+* Resolve XSS vuln
+
+= 6.4.9.5 =
+* Remove notice from Dashboard
+
+= 6.4.9.4 =
+* Fix CSRF vulnerability on reset page
+
+= 6.4.9.3 =
+* Re-enable [analytics] shortcode with fix
+
+= 6.4.9.2 =
+* Temporarily disable [analytics] shortcode to fix a bug
+ 
+= 6.4.9.1 =
+* Added [analytics-counter] shortcode so you can display the page view counter widget anywhere
+
+= 6.4.9 =
+* Added [analytics] shortcode so you can add show off your analytics publicly
 
 = 6.4.8 =
 * Bug fix: anonymizeIP
