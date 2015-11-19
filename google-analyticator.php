@@ -1441,8 +1441,17 @@ function ga_analyticator_other_plugins_page() {
 function ga_analyticator_top_level_menu() {
 	$menu_page = add_menu_page( 'Google Analytics', 'Google Analytics', 'manage_options', 'google-analyticator', 'ga_settings_page', 'dashicons-chart-line');
 	add_action('load-'.$menu_page, 'ga_pre_load' );
-	add_submenu_page( 'google-analyticator', 'Other Plugins', 'Other Plugins', 'manage_options', 'google-analyticator-other-plugins', 'ga_analyticator_other_plugins_page');
 
+	// XTEC ************ MODIFICAT - Hide submenu_page Other Plugins
+	// 2015.11.19 @nacho
+	if (is_xtec_super_admin()){
+	    add_submenu_page( 'google-analyticator', 'Other Plugins', 'Other Plugins', 'manage_options', 'google-analyticator-other-plugins', 'ga_analyticator_other_plugins_page');
+	}
+	//************ ORIGINAL
+	/*
+	add_submenu_page( 'google-analyticator', 'Other Plugins', 'Other Plugins', 'manage_options', 'google-analyticator-other-plugins', 'ga_analyticator_other_plugins_page');
+	*/
+	//************ FI
 	$activate_page = add_submenu_page( null, 'Activation', 'Google Analytics', 'manage_options', 'ga_activate' , 'ga_activate');
 	$reset_page = add_submenu_page(null, 'Reset', 'Reset', 'activate_plugins', 'ga_reset', 'ga_reset' );
    	add_action('load-'.$reset_page, 'ga_do_reset' );
