@@ -200,8 +200,12 @@ class GoogleStatsWidget extends WP_Widget
 		if (get_option(key_ga_show_ad) == '1') {
 			echo '<div style="font-size:9px;color:#666666;margin-top:0px;font-family:Verdana;">Powered By <a href="https://wordpress.org/plugins/google-analyticator/" title="Google Analyticator for Wordpress" style="text-decoration:none;" target="_blank"><img src="' . plugins_url('/google-analyticator/ga_logo.png') . '" alt="Google Analytics" style="border:0px;position:relative;top:4px;" /></a></div>';
 		}
-
-		echo '</div>';
+        // XTEC ************ AFEGIT - Added missing </div> that breaks view in mobile devices
+        // 2016.02.08 @aginard
+        else {
+            echo '</div>';
+        }
+        //************ FI
 	}
 
 	/**
