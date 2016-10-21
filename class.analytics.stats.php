@@ -28,11 +28,30 @@ class GoogleAnalyticsStats
 			}
 			
 			if ( !class_exists('Google_Client') ) {
+
+// XTEC ************ MODIFICAT - Upgraded Google APIs Client Library for PHP to 1.1.5 version
+// 2016.10.21 @sarjona
+				require_once 'google-api-php-client/src/Google/autoload.php';
+//************ ORIGINAL
+/*
 				require_once 'google-api-php-client/src/Google_Client.php';
+*/
+//************ FI
+
 			}
+
+// XTEC ************ MODIFICAT - Upgraded Google APIs Client Library for PHP to 1.1.5 version
+// 2016.10.21 @sarjona
+        if ( !class_exists('Google_Service_Analytics') ) {
+            require_once 'google-api-php-client/src/Google/autoload.php';
+        }
+//************ ORIGINAL
+/*
 			if ( !class_exists('Google_AnalyticsService') ) {
 				require_once 'google-api-php-client/src/contrib/Google_AnalyticsService.php';
 			}
+*/
+//************ FI
 
             $this->client = new Google_Client();
             $this->client->setApprovalPrompt("force");
@@ -43,11 +62,25 @@ class GoogleAnalyticsStats
 			
             $this->client->setScopes(array("https://www.googleapis.com/auth/analytics"));
 
+// XTEC ************ ELIMINAT - TODO: Review if there is another way to get the same result
+// 2016.10.21 @sarjona
+/*
             // Magic. Returns objects from the Analytics Service instead of associative arrays.
             $this->client->setUseObjects(true);
+*/
+//************ FI
 
             try {
+
+// XTEC ************ MODIFICAT - Upgraded Google APIs Client Library for PHP to 1.1.5 version
+// 2016.10.21 @sarjona
+                    $this->analytics = new Google_Service_Analytics($this->client);
+//************ ORIGINAL
+/*
                     $this->analytics = new Google_AnalyticsService($this->client);
+*/
+//************ FI
+
                 }
             catch (Google_ServiceException $e)
                 {
@@ -180,7 +213,16 @@ class GoogleAnalyticsStats
 
 	function getAnalyticsAccounts()
 	{
+
+// XTEC ************ MODIFICAT - Upgraded Google APIs Client Library for PHP to 1.1.5 version
+// 2016.10.21 @sarjona
+		$analytics = new Google_Service_Analytics($this->client);
+//************ ORIGINAL
+/*
 		$analytics = new Google_AnalyticsService($this->client);
+*/
+//************ FI
+
 		$accounts = $analytics->management_accounts->listManagementAccounts();
 		$account_array = array();
 
@@ -237,7 +279,15 @@ class GoogleAnalyticsStats
 	 **/
 	function getMetrics($metric, $startDate, $endDate, $dimensions = false, $sort = false, $filter = false, $limit = false)
 	{
+
+// XTEC ************ MODIFICAT - Upgraded Google APIs Client Library for PHP to 1.1.5 version
+// 2016.10.21 @sarjona
+		$analytics = new Google_Service_Analytics($this->client);
+//************ ORIGINAL
+/*
 		$analytics = new Google_AnalyticsService($this->client);
+*/
+//************ FI
 
 		$params = array();
 

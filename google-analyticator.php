@@ -392,7 +392,7 @@ function ga_options_page() {
 				if(isset( $_POST['ga_domain_names'])){
 					// Get our domains array, and match the UID to the value
 					$domains = stripslashes( $_POST['ga_domain_names'] );
-					$all_domains = json_decode( $domains, true );
+					$all_domains = unserialize( $domains );
 					update_option( 'ga_domain_name', $all_domains[ $_POST[key_ga_uid] ] );
 				}
         
@@ -656,9 +656,14 @@ if(!$addons){?>
     		<?php if (get_option(key_ga_disable_gasites) == ga_disabled){?>
     		<?php
 
-                            if( $useAuth ):
-                                
-                                $uids = ga_get_analytics_accounts();
+                        if( $useAuth ):
+
+                            // XTEC ************ AFEGIT - Check if user has any account of Google analytics. Show an error if there isn't any.
+                            // 2016.10.25 @xaviernietosanchez
+                            // 2016.10.25 @aginard
+                            try {
+                            // ************ FI
+                            $uids = ga_get_analytics_accounts();
 
                                 echo "<select name='".esc_attr(key_ga_uid)."'> ";
 
@@ -677,16 +682,40 @@ if(!$addons){?>
     	                            
                                 echo '</select>';
 
-                                // Need a copy of the array, so we can store the domain name too (for visual purposes)
-                                echo '<input type="hidden" name="ga_domain_names" value="' . esc_attr(json_encode( $uids )) . '" />';
-                                
-                            else:
+                            // Need a copy of the array, so we can store the domain name too (for visual purposes)
+                            echo '<input type="hidden" name="ga_domain_names" value="' . esc_attr(json_encode( $uids )) . '" />';
+                           
+                            // XTEC ************ AFEGIT - Check if user has any account of Google analytics. Show an error if there isn't any.
+                            // 2016.10.25 @xaviernietosanchez
+                            // 2016.10.25 @aginard
+                            } catch (Exception $e) {
+                                ?>
+                                <span style="color:red"><?php _e('The Google user configured has no Google analytics accounts. Please, create an account to make the analytics work.','google-analyticator'); ?></span>
+                                <?php
+                            }
+                            // ************ FI
 
-                                echo '<input type="text" name="'.esc_attr(key_ga_uid).'" value="'. esc_attr(get_option( key_ga_uid )) .'" />';
+                        else:
 
-                            endif;
-                            ?><br />
+                            echo '<input type="text" name="'.esc_attr(key_ga_uid).'" value="'. esc_attr(get_option( key_ga_uid )) .'" />';
+
+                        endif;
+                        ?><br />
+
+                        <?php
+                        // XTEC ************ AFEGIT - 
+                        // 2016.10.25 @xaviernietosanchez
+                        if( isset( $uids ) || !is_null( $uids ) ){
+                        // ************ FI
+                        ?>
                             <input type="checkbox" name="<?php echo esc_attr(key_ga_disable_gasites)?>" id="<?php echo esc_attr(key_ga_disable_gasites)?>"<?php if(get_option(key_ga_disable_gasites) == ga_enabled){?> checked="checked"<?php }?> /> <?php esc_html_e('Hide Google Analytics UID after saving', 'google-analyticator'); ?>
+                        <?php
+                        // XTEC ************ AFEGIT - 
+                        // 2016.10.25 @xaviernietosanchez
+                        }
+                        // ************ FI
+                        ?>
+
              	<?php }else{
     			?><?php echo esc_html(get_option( 'ga_domain_name' )); ?> - To change this, you must <a href="<?php echo esc_attr(wp_nonce_url(admin_url('/options-general.php?page=ga_reset'), 'ga-reset')); ?>">deauthorize and reset the plugin</a>
     			 <input type="hidden" name="<?php echo esc_attr(key_ga_disable_gasites)?>" value="<?php echo esc_attr(ga_enabled)?>" /><input type="hidden" name="<?php echo esc_attr(key_ga_uid)?>" value="<?php echo esc_attr(get_option(key_ga_uid))?>" />
@@ -1525,10 +1554,10 @@ function ga_analyticator_global_notice() {
 				#ga_analyticator_global_notification a.button:active {vertical-align:baseline;}
 			</style>
 			<div class="updated" id="ga_analyticator_global_notification" style="border:3px solid #317A96;position:relative;background:##3c9cc2;background-color:#3c9cc2;color:#ffffff;height:70px;">
-				<a class="notice-dismiss" href="<?php echo esc_url(admin_url('admin.php?page=google-analyticator&ga_analyticator_global_notification=0')); ?>" style="right:165px;top:0;"></a>
-				<a href="<?php echo esc_url(admin_url('admin.php?page=google-analyticator&ga_analyticator_global_notification=0')); ?>" style="position:absolute;top:9px;right:15px;color:#ffffff;">Dismiss and go to settings</a>
+				<a class="notice-dismiss" href="<?php echo admin_url('admin.php?page=google-analyticator&ga_analyticator_global_notification=0'); ?>" style="right:165px;top:0;"></a>
+				<a href="<?php echo admin_url('admin.php?page=google-analyticator&ga_analyticator_global_notification=0'); ?>" style="position:absolute;top:9px;right:15px;color:#ffffff;">Dismiss and go to settings</a>
 				<p style="font-size:16px;line-height:50px;">
-					<?php esc_html('Grow your site faster!'); ?> &nbsp;<a style="background-color: #6267BE;border-color: #3C3F76;" href="<?php echo esc_url(admin_url('plugin-install.php?tab=plugin-information&plugin=sumome&TB_iframe=true&width=743&height=500')); ?>" class="thickbox button button-primary">Get SumoMe WordPress Plugin</a>
+					<?php _e('Grow your site faster!'); ?> &nbsp;<a style="background-color: #6267BE;border-color: #3C3F76;" href="<?php echo admin_url('plugin-install.php?tab=plugin-information&plugin=sumome&TB_iframe=true&width=743&height=500'); ?>" class="thickbox button button-primary">Get SumoMe WordPress Plugin</a>
 				</p>
 	        </div>
 		<?php
