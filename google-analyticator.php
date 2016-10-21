@@ -633,7 +633,12 @@ if(!$addons){?>
 		<?php
 
                         if( $useAuth ):
-                            
+
+                            // XTEC ************ AFEGIT - Check if user has any account of Google analytics. Show an error if there isn't any.
+                            // 2016.10.25 @xaviernietosanchez
+                            // 2016.10.25 @aginard
+                            try {
+                            // ************ FI
                             $uids = ga_get_analytics_accounts();
 
                             echo "<select name='".key_ga_uid."'> ";
@@ -655,14 +660,38 @@ if(!$addons){?>
 
                             // Need a copy of the array, so we can store the domain name too (for visual purposes)
                             echo '<input type="hidden" name="ga_domain_names" value=\'' . serialize( $uids ) . '\' />';
-                            
+
+                            // XTEC ************ AFEGIT - Check if user has any account of Google analytics. Show an error if there isn't any.
+                            // 2016.10.25 @xaviernietosanchez
+                            // 2016.10.25 @aginard
+                            } catch (Exception $e) {
+                                ?>
+                                <span style="color:red"><?php _e('The Google user configured has no Google analytics accounts. Please, create an account to make the analytics work.','google-analyticator'); ?></span>
+                                <?php
+                            }
+                            // ************ FI
+
                         else:
 
                             echo '<input type="text" name="'.key_ga_uid.'" value="'. get_option( key_ga_uid ) .'" />';
 
                         endif;
                         ?><br />
+
+                        <?php
+                        // XTEC ************ AFEGIT - 
+                        // 2016.10.25 @xaviernietosanchez
+                        if( isset( $uids ) || !is_null( $uids ) ){
+                        // ************ FI
+                        ?>
                         <input type="checkbox" name="<?php echo key_ga_disable_gasites?>" id="<?php echo key_ga_disable_gasites?>"<?php if(get_option(key_ga_disable_gasites) == ga_enabled){?> checked="checked"<?php }?> /> <?php _e('Hide Google Analytics UID after saving', 'google-analyticator'); ?>
+                        <?php
+                        // XTEC ************ AFEGIT - 
+                        // 2016.10.25 @xaviernietosanchez
+                        }
+                        // ************ FI
+                        ?>
+
          	<?php }else{
 			?><?php echo get_option( 'ga_domain_name' ); ?> - To change this, you must <a href="<?php echo admin_url('/options-general.php?page=ga_reset'); ?>">deauthorize and reset the plugin</a>
 			 <input type="hidden" name="<?php echo key_ga_disable_gasites?>" value="<?php echo ga_enabled?>" /><input type="hidden" name="<?php echo key_ga_uid?>" value="<?php echo get_option(key_ga_uid)?>" />
