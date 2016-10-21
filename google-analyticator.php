@@ -701,7 +701,21 @@ if(!$addons){?>
 
                         endif;
                         ?><br />
+
+                        <?php
+                        // XTEC ************ AFEGIT - 
+                        // 2016.10.25 @xaviernietosanchez
+                        if( isset( $uids ) || !is_null( $uids ) ){
+                        // ************ FI
+                        ?>
                         <input type="checkbox" name="<?php echo key_ga_disable_gasites?>" id="<?php echo key_ga_disable_gasites?>"<?php if(get_option(key_ga_disable_gasites) == ga_enabled){?> checked="checked"<?php }?> /> <?php _e('Hide Google Analytics UID after saving', 'google-analyticator'); ?>
+                        <?php
+                        // XTEC ************ AFEGIT - 
+                        // 2016.10.25 @xaviernietosanchez
+                        }
+                        // ************ FI
+                        ?>
+
          	<?php }else{
 			?><?php echo get_option( 'ga_domain_name' ); ?> - To change this, you must <a href="<?php echo admin_url('/options-general.php?page=ga_reset'); ?>">deauthorize and reset the plugin</a>
 			 <input type="hidden" name="<?php echo key_ga_disable_gasites?>" value="<?php echo ga_enabled?>" /><input type="hidden" name="<?php echo key_ga_uid?>" value="<?php echo get_option(key_ga_uid)?>" />
@@ -1638,3 +1652,5 @@ function google_analyticator_filter_plugin_actions($links, $file) {
 // 2015.12.15 @nacho
 /*
 add_action( 'admin_menu', 'ga_analyticator_top_level_menu' );
+*/
+//************ FI
