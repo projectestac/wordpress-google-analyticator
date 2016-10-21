@@ -44,7 +44,20 @@ class GoogleStatsWidget extends WP_Widget
 		echo '<!-- Data gathered from last ' . number_format($timeFrame) . ' days using Google Analyticator -->';
 		$this->initiateBackground($pageBg, $font);
 		$this->beginWidget($font, $widgetBg);
+
+		// XTEC ************ MODIFICAT - Check if user has any account of Google analytics. Show an error if there isn't any.
+		// 2016.10.26 @xaviernietosanchez
+		try{
+			$this->widgetInfo($this->getUniqueVisitors($acnt, $timeFrame), $line1, $line2, $innerBg, $font);
+		} catch (Exception $e) {
+			print 'GA Widget - there was a service error ' . $e->getCode() . ':' . $e->getMessage();
+		}
+		// ************ ORIGINAL
+		/*
 		$this->widgetInfo($this->getUniqueVisitors($acnt, $timeFrame), $line1, $line2, $innerBg, $font);
+		*/
+		// ************ FI
+
 		$this->endWidget();
 		
 		# After the widget
@@ -115,8 +128,22 @@ class GoogleStatsWidget extends WP_Widget
                     return false; 
 
 		# Get a list of accounts
+
+		// XTEC ************ MODIFICAT - Change call to fix error
+		// 2016.10.25 @xaviernietosanchez
+		try{
+			$accounts = $stats->getAnalyticsAccounts();
+		} catch (Exception $e) {
+			?>
+            <span><?php print 'GA Widget - there was a service error ' . $e->getCode() . ':' . $e->getMessage(); ?></span>
+            <?php
+        }
+		// ************ ORIGINAL
+		/*
 		//$accounts = $stats->getAnalyticsAccounts();
 		$accounts = $stats->getSingleProfile();
+		*/
+		// ************ FI
 
 
 		
