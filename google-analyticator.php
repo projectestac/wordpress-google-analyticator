@@ -1160,8 +1160,19 @@ if(!$addons){?>
         <p class="submit">
           <input type="submit" class="button button-primary" name="info_update" value="<?php esc_attr_e('Save Changes', 'google-analyticator'); ?>" />
         </p>
-        <a href="<?php echo esc_url(ga_analyticator_setting_url()). '&pageaction=ga_clear_cache' ?>"><?php esc_html_e('Clear Analyticator Cache', 'google-analyticator'); ?></a> |  <a href="<?php echo esc_url(wp_nonce_url( admin_url('/options-general.php?page=ga_reset'), 'ga-reset')); ?>">
-        <?php esc_html_e('Deauthorize &amp; Reset Google Analyticator.', 'google-analyticator'); ?></a>   
+    <?php
+    // ************ XTEC - Fix url reset google analitycator
+    // 2016.10.26 @xaviernietosanchez
+    ?>
+    <a href="<?php echo esc_url(ga_analyticator_setting_url()). '&pageaction=ga_clear_cache' ?>"><?php esc_html_e('Clear Analyticator Cache', 'google-analyticator'); ?></a> |  <a href="<?php echo esc_url(wp_nonce_url( admin_url('/options-general.php?page=ga_reset'), 'ga-reset')); ?>">
+    <?php
+    // ************ ORIGINAL
+    /*
+    <a href="<?php echo ga_analyticator_setting_url(). '&pageaction=ga_clear_cache' ?>"><?php _e('Clear Analyticator Cache', 'google-analyticator'); ?></a> |  <a href="<?php echo admin_url('/options-general.php?page=ga_reset'); ?>">
+    */
+    // ************ FI
+    ?>        
+<?php esc_html_e('Deauthorize &amp; Reset Google Analyticator.', 'google-analyticator'); ?></a>   
       </form>
 
     </div>
@@ -1281,11 +1292,11 @@ function add_google_analytics()
 			if ( !function_exists("is_preview") || ( function_exists("is_preview") && !is_preview() ) )
 			{
 				# Add the notice that Google Analyticator tracking is enabled
-				echo "<!-- Google Analytics Tracking by Google Analyticator " . esc_html(GOOGLE_ANALYTICATOR_VERSION) . " -->\n";
+				echo "<!-- Google Analytics Tracking by Google Analyticator " . GOOGLE_ANALYTICATOR_VERSION . ": http://www.videousermanuals.com/google-analyticator/ -->\n";
 
 				# Add the Adsense data if specified
 				if ( get_option(key_ga_adsense) != '' )
-					echo '<script type="text/javascript">window.google_analytics_uacct = "' . esc_attr(get_option(key_ga_adsense)) . "\";</script>\n";
+					echo '<script type="text/javascript">window.google_analytics_uacct = "' . get_option(key_ga_adsense) . "\";</script>\n";
 
 				# Include the file types to track
 				$extensions = explode(',', stripslashes(get_option(key_ga_downloads)));
@@ -1302,13 +1313,13 @@ function add_google_analytics()
 					$jsanalytic_snippet = get_option(key_ga_analytic_snippet);
 				?>
 <script type="text/javascript">
-    var analyticsFileTypes = [<?php echo esc_js($ext ? '' : strtolower($ext) ); ?>];
+    var analyticsFileTypes = [<?php echo strtolower($ext); ?>];
 <?php if ( $event_tracking != 'enabled' ) { ?>
-    var analyticsOutboundPrefix = '/<?php echo esc_js($outbound_prefix); ?>/';
-    var analyticsDownloadsPrefix = '/<?php echo esc_js($downloads_prefix); ?>/';
+    var analyticsOutboundPrefix = '/<?php echo $outbound_prefix; ?>/';
+    var analyticsDownloadsPrefix = '/<?php echo $downloads_prefix; ?>/';
 <?php } ?>
-    var analyticsSnippet = '<?php echo esc_js($jsanalytic_snippet); ?>';
-    var analyticsEventTracking = '<?php echo esc_js($event_tracking); ?>';
+    var analyticsSnippet = '<?php echo $jsanalytic_snippet; ?>';
+    var analyticsEventTracking = '<?php echo $event_tracking; ?>';
 </script>
 <?php
 	# Add the first part of the core tracking code
@@ -1320,7 +1331,7 @@ function add_google_analytics()
 	var pluginUrl = '//www.google-analytics.com/plugins/ga/inpage_linkid.js';
 	_gaq.push(['_require', 'inpage_linkid', pluginUrl]);
 <?php endif; ?>  
-	_gaq.push(['_setAccount', '<?php echo esc_js($uid); ?>']);
+	_gaq.push(['_setAccount', '<?php echo $uid; ?>']);
     _gaq.push(['_addDevId', 'i9k95']); // Google Analyticator App ID with Google
 <?php if ($need_to_annon == '1' ): ?>
     _gaq.push(['_gat._anonymizeIp']);
@@ -1330,7 +1341,7 @@ function add_google_analytics()
     # Add any tracking code before the trackPageview
     do_action('google_analyticator_extra_js_before');
     if ( '' != $extra )
-            echo esc_js("	$extra\n");
+            echo "	$extra\n";
 
     # Add the track pageview function
     echo "	_gaq.push(['_trackPageview']);\n";
@@ -1342,7 +1353,7 @@ function add_google_analytics()
     # Add any tracking code after the trackPageview
     do_action('google_analyticator_extra_js_after');
     if ( '' != $extra_after )
-            echo esc_js("	$extra_after\n");
+            echo "	$extra_after\n";
 
     # Add the final section of the tracking code
     ?>
@@ -1363,7 +1374,7 @@ function add_google_analytics()
 	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
 	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-	ga('create', '<?php echo esc_js($uid); ?>', 'auto');
+	ga('create', '<?php echo $uid; ?>', 'auto');
 <?php if(get_option(key_ga_enhanced_link_attr) == ga_enabled): ?>
 	ga('require', 'linkid', 'linkid.js');
 <?php endif; ?>
@@ -1377,27 +1388,27 @@ function add_google_analytics()
 <?php
     # Add any tracking code before the trackPageview
     do_action('google_analyticator_extra_js_before');
-    if ( '' != $extra ) echo esc_js("	$extra\n");
+    if ( '' != $extra ) echo "	$extra\n";
 ?>
 <?php
 	$dimentionKeyVal = get_option(key_ga_admin_disable_DimentionIndex);
     if ( ( get_option(key_ga_admin_disable) == "admin" ) && ( ga_current_user_is(get_option(key_ga_admin_role)) ) && $dimentionKeyVal )
-      echo esc_js("	ga('set', 'dimension". $dimentionKeyVal ."', 'admin');\n");
+      echo "	ga('set', 'dimension". $dimentionKeyVal ."', 'admin');\n";
 ?>
 	ga('send', 'pageview');
 <?php		
     # Add any tracking code after the trackPageview
     do_action('google_analyticator_extra_js_after');
     if ( '' != $extra_after )
-      echo esc_js("	$extra_after\n");
+      echo "	$extra_after\n";
 }?>
 </script>
 <?php
 			}
 		} else {
 			# Add the notice that Google Analyticator tracking is enabled
-			echo "<!-- Google Analytics Tracking by Google Analyticator " . esc_html(GOOGLE_ANALYTICATOR_VERSION) . ": http://wordpress.org/plugins/google-analyticator/ -->\n";
-			echo "	<!-- " . esc_html__('Tracking code is hidden, since the settings specify not to track admins. Tracking is occurring for non-admins.', 'google-analyticator') . " -->\n";
+			echo "<!-- Google Analytics Tracking by Google Analyticator " . GOOGLE_ANALYTICATOR_VERSION . ": http://wordpress.org/plugins/google-analyticator/ -->\n";
+			echo "	<!-- " . __('Tracking code is hidden, since the settings specify not to track admins. Tracking is occurring for non-admins.', 'google-analyticator') . " -->\n";
 		}
 	}
 }
