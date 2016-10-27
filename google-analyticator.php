@@ -1128,7 +1128,18 @@ if(!$addons){?>
     <p class="submit">
       <input type="submit" class="button button-primary" name="info_update" value="<?php _e('Save Changes', 'google-analyticator'); ?>" />
     </p>
+    <?php
+    // ************ XTEC - Fix url reset google analitycator
+    // 2016.10.26 @xaviernietosanchez
+    ?>
+    <a href="<?php echo ga_analyticator_setting_url(). '&pageaction=ga_clear_cache' ?>"><?php _e('Clear Analyticator Cache', 'google-analyticator'); ?></a> |  <a href="<?php echo wp_nonce_url(admin_url('/options-general.php?page=ga_reset'),'ga-reset'); ?>">
+    <?php
+    // ************ ORIGINAL
+    /*
     <a href="<?php echo ga_analyticator_setting_url(). '&pageaction=ga_clear_cache' ?>"><?php _e('Clear Analyticator Cache', 'google-analyticator'); ?></a> |  <a href="<?php echo admin_url('/options-general.php?page=ga_reset'); ?>">
+    */
+    // ************ FI
+    ?>
     <?php _e('Deauthorize &amp; Reset Google Analyticator.', 'google-analyticator'); ?></a>   
   </form>
 </div>
