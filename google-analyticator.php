@@ -1445,11 +1445,6 @@ function ga_outgoing_links()
  **/
 function ga_external_tracking_js()
 {
-	// Exit if this is a post preview
-	if (is_preview()) {
-		return;
-	}
-
 	$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 	wp_enqueue_script('ga-external-tracking', plugins_url("/google-analyticator/external-tracking{$suffix}.js"), array('jquery'), GOOGLE_ANALYTICATOR_VERSION);
 }
@@ -1461,7 +1456,8 @@ function ga_current_user_is($roles)
 {
 	if ( !$roles ) return false;
 
-	$current_user = wp_get_current_user();
+	global $current_user;
+	get_currentuserinfo();
 	$user_id = intval( $current_user->ID );
 
 	if ( !$user_id ) {
