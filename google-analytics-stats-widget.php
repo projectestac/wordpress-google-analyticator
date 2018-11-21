@@ -233,9 +233,10 @@ class GoogleStatsWidget extends WP_Widget
 
         else {
             echo '</div>';
-        }
+		}
 
         //************ FI
+		echo '</div>';
 
 	}
 
