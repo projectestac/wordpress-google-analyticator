@@ -231,8 +231,16 @@ class GoogleStatsWidget extends WP_Widget
         // 2016.02.08 @aginard
         else {
             echo '</div>';
+<<<<<<< HEAD
         }
         //************ FI
+=======
+		}
+
+        //************ FI
+		echo '</div>';
+
+>>>>>>> Fix width issues with widget
 	}
 
 	/**
