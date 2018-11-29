@@ -236,9 +236,10 @@ class GoogleStatsWidget extends WP_Widget
 	}
 
         //************ FI
-		//XTEC *** 586 - Add close tag to fix visualization - 2018.11.29 @adriagarrido
+		// XTEC ********** AFEGIT - Add close tag to fix visualization
+		// 2018.11.29 @adriagarrido
 		echo '</div>';
-
+		// ********** FI
 	}
 
 	/**
