@@ -232,12 +232,17 @@ class GoogleStatsWidget extends WP_Widget
         else {
             echo '</div>';
 <<<<<<< HEAD
+<<<<<<< HEAD
         }
         //************ FI
 =======
 		}
+=======
+	}
+>>>>>>> Add comment
 
         //************ FI
+		//XTEC *** 586 - Add close tag to fix visualization - 2018.11.29 @adriagarrido
 		echo '</div>';
 
 >>>>>>> Fix width issues with widget
