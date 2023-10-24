@@ -136,6 +136,11 @@ class GoogleAnalyticsStats
                 print 'There was an Analytics API service error ' . $e->getCode() . ': ' . $e->getMessage();
                 return false;
             }
+			catch(Exception $e)
+            {
+            	print $e->getMessage();
+            	return false;
+            }
 
             $profile_id = $profiles->items[0]->id;
             if (empty($profile_id)) return false;
@@ -155,6 +160,10 @@ class GoogleAnalyticsStats
                 catch (Google_ServiceException $e)
                 {
                     print 'There was an Analytics API service error ' . $e->getCode() . ': ' . $e->getMessage();
+                }
+                catch(Exception $e)
+                {
+                	print $e->getMessage();
                 }
 
 

@@ -1,9 +1,9 @@
-=== Google Analyticator ===
+=== Analyticator ===
 Contributors: noahkagan
 Tags: google analytics plugin, stats, statistics, google, analytics, dashboard, google analytics, tracking, widget, marketing,pageviews,visits, web stats, javascript
 Requires at least: 3.2
-Tested up to: 4.8
-Stable tag: 6.5.4
+Tested up to: 6.1.1
+Stable tag: 6.5.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -11,12 +11,11 @@ Easily view your Google Analytics and real-time statistics inside WordPress! Mak
 
 == Description ==
 
+[Check out the latest WordPress deals for your site.](https://appsumo.com/search?tags=wordpress&utm_source=sumo&utm_medium=wp-widget&utm_campaign=google-analyticator)  
+
 Google Analyticator makes it super easy to view Google Analytics within your WordPress dashboard. This eliminates the need to edit your template code to begin logging. Google Analyticator also includes several widgets for displaying Analytics data in the admin and on your blog.
 
-One of the most popular WordPress plugins for Google Analytics! Over 3.5+ million downloads.
-
-Check out our other plugin for getting more traffic [here](http://bit.ly/1PhVdpI).
-
+One of the most popular WordPress plugins for Google Analytics! Over 3.5+ million downloads.  
 
 = Features =
 
@@ -73,6 +72,16 @@ For any support issues, please use the official WordPress support forums.
 
 
 == Changelog ==
+= 6.5.7 =
+* Add some data escaping
+
+= 6.5.6 =
+* Fix deauthorize link nonce.
+* Use json_encode/json_decode to avoid unserialize() vulnerability.
+
+= 6.5.5 =
+* Add a couple catches for breakng exceptions.
+
 = 6.5.4 =
 * Fix depricated API field name calls.
 * Check for is_preview() in ga_external_tracking_js()
