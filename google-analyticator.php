@@ -729,8 +729,6 @@ if(!$addons){?>
         </th>
         <td><?php
 						echo "<select name='".key_ga_analytic_snippet."' id='".key_ga_analytic_snippet."'>\n";
-
-                        <?php
                         // XTEC ************ AFEGIT - 
                         // 2016.10.25 @xaviernietosanchez
                         if( isset( $uids ) || !is_null( $uids ) ){
@@ -740,12 +738,11 @@ if(!$addons){?>
                         <?php
                         // XTEC ************ AFEGIT - 
                         // 2016.10.25 @xaviernietosanchez
-                        }
+					    }else{
                         // ************ FI
                         ?>
 
-             	<?php }else{
-    			?><?php echo esc_html(get_option( 'ga_domain_name' )); ?> - To change this, you must <a href="<?php echo esc_attr(wp_nonce_url(admin_url('/options-general.php?page=ga_reset'), 'ga-reset')); ?>">deauthorize and reset the plugin</a>
+             	 <?php echo esc_html(get_option( 'ga_domain_name' )); ?> - To change this, you must <a href="<?php echo esc_attr(wp_nonce_url(admin_url('/options-general.php?page=ga_reset'), 'ga-reset')); ?>">deauthorize and reset the plugin</a>
     			 <input type="hidden" name="<?php echo esc_attr(key_ga_disable_gasites)?>" value="<?php echo esc_attr(ga_enabled)?>" /><input type="hidden" name="<?php echo esc_attr(key_ga_uid)?>" value="<?php echo esc_attr(get_option(key_ga_uid))?>" />
     			<?php
     			}?>               
