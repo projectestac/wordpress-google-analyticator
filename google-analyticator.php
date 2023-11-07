@@ -1203,6 +1203,12 @@ if(!$addons){?>
     </div>
     </div>
 </div>
+    <?php
+    // XTEC ************ AFEGIT - Showing ads only for super admin
+    // 2023.11.07 @corentinrobin
+    if (is_xtec_super_admin()):
+    // ************ FI 
+    ?>
         <div class="google-analyticator-content-right">
             <div class="google-analyticator-content-container-right">
                 <div class="google-analyticator-promo-box entry-content">
@@ -1222,6 +1228,12 @@ if(!$addons){?>
                 </div>
             </div>
         </div>
+    <?php
+    // XTEC ************ AFEGIT - Showing ads only for super admin
+    // 2023.11.07 @corentinrobin
+    endif;
+    // ************ FI 
+    ?>
 <!-- end wrap -->
 </div>
 <!-- end vumga-container -->
